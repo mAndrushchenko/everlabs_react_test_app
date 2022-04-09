@@ -1,22 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import AppBar from '@mui/material/AppBar';
-import Container from '@mui/material/Container';
-import { Button } from "@mui/material";
-import Box from "@mui/material/Box";
+import { Container, AppBar, Button, Grid } from "@mui/material";
 
+const pages = [
+  {name: "Home", path: "/"},
+  {name: "Todos", path: "todos"},
+  {name: "Photos", path: "photos"}
+]
 
-export const Header = () => {
-
-  return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Box display="inline-block" width="100%" textAlign="center">
-          <Button to='todos' color="inherit" component={Link}>Todos</Button>
-          <Button to='photos' color="inherit" component={Link}>Photos</Button>
-        </Box>
-      </Container>
-    </AppBar>
-  );
-};
+export const Header = () => (
+  <AppBar position="static">
+    <Container maxWidth="xs">
+      <Grid container>
+        {pages.map(({ name, path }) => (
+          <Grid item xs={4} textAlign={"center"}>
+            <Button to={path} color="inherit" component={Link}>{name}</Button>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
+  </AppBar>
+)
