@@ -1,14 +1,16 @@
-import React from 'react'
+import React from "react"
+import { Provider } from "react-redux"
 
-import { AppRoutes } from "./routes";
+import { AppRoutes } from "./routes"
+import { store } from "./services/store"
 
-import { CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material"
 
 export const App = () => {
   return (
-    <>
-      <CssBaseline />
-      <AppRoutes />
-    </>
-  );
+    <Provider store={store}>
+      <CssBaseline/>
+      <AppRoutes/>
+    </Provider>
+  )
 }
