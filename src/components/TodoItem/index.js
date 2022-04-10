@@ -1,56 +1,75 @@
-import React, { useState } from "react";
-import { useParams } from "react-router";
+import React, { useState } from "react"
+import { useNavigate } from "react-router"
+import { useDispatch } from "react-redux"
 
-import { Box, Paper, Input, Checkbox, IconButton, Typography } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete"
+import { Box, Paper, Input, Checkbox, IconButton, Typography } from "@mui/material"
 
-export const TodoItem = () => {
-  const { todoId } = useParams()
+import { removeTodo, toggleTodo, updateTodoText } from "../../services/store/slices/todoSlice"
 
-  const [isEdit, setIsEdit] = useState(false)
-  const [isCompleted, setIsCompleted] = useState(false)
-  const [inputValue, setInputValue] = useState(todoId || 'Default value')
+export const TodoItem = ({ todo }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [ isEdit, setIsEdit ] = useState(false)
 
-  const showInput = () => {
+  const [ inputValue, setInputValue ] = useState(todo.text)
+
+  const showInput = (e) => {
+    e.stopPropagation()
     setIsEdit(true)
   }
 
   const hideInput = () => {
     setIsEdit(false)
-  }
 
+    if (inputValue.trim()) {
+      const updatedTodo = { ...todo, text: inputValue }
+      dispatch(updateTodoText(updatedTodo))
+    } else {
+      navigate("/todos")
+      dispatch(removeTodo(todo))
+    }
+  }
 
   const handleCheckBox = () => {
-    setIsCompleted(prevState => !prevState)
+    dispatch(toggleTodo(todo))
   }
-  const removeTodo = () => {
 
+  const onDeleteIcon = (e) => {
+    e.stopPropagation()
+    navigate("/todos")
+    dispatch(removeTodo(todo))
   }
 
   const handleInputChange = ({ target }) => {
     setInputValue(target.value)
   }
 
+  const openTodo = () => {
+    navigate(`/todos/${todo.id}`)
+  }
 
   return (
-    <Paper elevation={3}>
+    <Paper elevation={3} onClick={openTodo}>
       <Box px={3} py={2} display={"flex"} justifyContent={"space-between"}>
         <Box mr={1}>
-          <Checkbox checked={isCompleted} onChange={handleCheckBox}/>
+          <Checkbox checked={todo.isCompleted} onChange={handleCheckBox} onClick={(e) => e.stopPropagation()}/>
         </Box>
         <Box width={"100%"} display={"flex"} alignItems={"center"}>
           {isEdit ?
-            <Input fullWidth autoFocus value={inputValue} onBlur={hideInput} onChange={handleInputChange}/> :
+            <Box component={"form"} width={"100%"} onSubmit={hideInput}>
+              <Input fullWidth autoFocus value={inputValue} onBlur={hideInput} onChange={handleInputChange}/>
+            </Box> :
             <Typography
               width={"100%"}
-              style={{ textDecoration: isCompleted ? "line-through" : "auto"}}
+              style={{ textDecoration: todo.isCompleted ? "line-through" : "auto" }}
               onClick={showInput}
-            >{inputValue}</Typography>
+            >{todo.text}</Typography>
           }
         </Box>
         <Box ml={1}>
-          <IconButton onClick={removeTodo}>
-            <DeleteIcon color={"error"} />
+          <IconButton onClick={onDeleteIcon}>
+            <DeleteIcon color={"error"}/>
           </IconButton>
         </Box>
       </Box>
