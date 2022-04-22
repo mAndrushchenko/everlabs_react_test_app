@@ -12,6 +12,7 @@ import { removeTodo, toggleStar, toggleTodo, updateTodoText } from "../../servic
 
 export const TodoItem = ({ todo }) => {
   const dispatch = useDispatch()
+  // Navigation
   const navigate = useNavigate()
   const [ edit, setEdit ] = useState({})
   const [ form, setForm ] = useState({ title: todo.title, description: todo.description })

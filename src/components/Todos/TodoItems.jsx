@@ -2,15 +2,16 @@ import React from "react"
 import { useSelector } from "react-redux"
 import { useSearchParams } from "react-router-dom"
 
-import { Grid, Typography } from "@mui/material"
 import { TodoItem } from "./TodoItem"
+import { Grid, Typography } from "@mui/material"
 
-import { getTodos } from "../../services/store/slices/todoSlice"
 import { todosFilterHelper } from "../../utils"
 import { getSearchParamsHelper } from "../../utils"
+import { getTodos } from "../../services/store/slices/todoSlice"
 
 
 export const TodoItems = () => {
+  // Used search params
   const [searchParams] = useSearchParams()
   const todos = useSelector(getTodos)
   const filteredTodos = todosFilterHelper({ todos, params: getSearchParamsHelper({ searchParams }) })

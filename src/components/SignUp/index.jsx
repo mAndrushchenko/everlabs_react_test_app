@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import { SingUpForm } from "../SingUpForm"
 import { Box, Container } from "@mui/material"
-import { onChangeFormHelper } from "../../utils/onChangeFormHelper"
+import { onChangeFormHelper } from "../../utils"
 
 const initialFormState = {
   gender: "",
@@ -13,7 +13,7 @@ const initialFormState = {
   hasChildren: false
 }
 
-export const SignIn = () => {
+export const SignUp = () => {
   const [form, setForm] = useState(initialFormState)
   const [errors, setErrors] = useState(initialFormState)
 

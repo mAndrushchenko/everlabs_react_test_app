@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { useSearchParams } from "react-router-dom"
 
 import {
@@ -12,20 +12,18 @@ import {
   InputLabel,
   FormControlLabel, Typography, Button
 } from "@mui/material"
-import { getSearchParamsHelper } from "../../utils/getSearchParamsHelper"
 
+import {
+  TODO_STATE_FILTER,
+  TODO_IS_IMPORTANT_FILTER,
+  TODO_SORT_BY_DATE_FILTER,
+  TODO_WITH_DESCRIPTION_FILTER
+} from "../../constants"
+import { getSearchParamsHelper } from "../../utils"
 
-// Todo: add groups
-// const groups = [{ name: 'All', value: 'all' }, { name: 'Family', value: 'family' }, { name: 'Work', value: 'work' }]
-
-export const filters = {
-  todoState: 'todo_state',
-  sortByDate: 'sort_by_date',
-  isImportant: 'is_important',
-  withDescription: 'with_description'
-}
 
 export const TodosFilter = () => {
+  // handle search params
   const [searchParams, setSearchParams] = useSearchParams()
 
   const handleSelect = ({ target }) => {
@@ -54,8 +52,8 @@ export const TodosFilter = () => {
               <InputLabel id="todos-state-label">State</InputLabel>
               <Select
                 label="State"
-                value={searchParams.get(filters.todoState) || 'all'}
-                name={filters.todoState}
+                value={searchParams.get(TODO_STATE_FILTER) || 'all'}
+                name={TODO_STATE_FILTER}
                 onChange={handleSelect}
                 labelId="todos-state-label"
               >
@@ -69,8 +67,8 @@ export const TodosFilter = () => {
             <FormControl fullWidth>
               <InputLabel id="todos-sort-by-date-label">Sort by date</InputLabel>
               <Select
-                name={filters.sortByDate}
-                value={searchParams.get(filters.sortByDate) || 'default'}
+                name={TODO_SORT_BY_DATE_FILTER}
+                value={searchParams.get(TODO_SORT_BY_DATE_FILTER) || 'default'}
                 label="Sort by date"
                 defaultValue="default"
                 onChange={handleSelect}
@@ -82,36 +80,21 @@ export const TodosFilter = () => {
               </Select>
             </FormControl>
           </Grid>
-          {/*<Grid item xs={12}>*/}
-          {/*  <FormControl fullWidth>*/}
-          {/*    <InputLabel id="todos-sort-by-group-label">Sort by group</InputLabel>*/}
-          {/*    <Select*/}
-          {/*      labelId="todos-sort-by-group-label"*/}
-          {/*      id="todos-sort-by-group-select"*/}
-          {/*      defaultValue={groups[0].value}*/}
-          {/*      label="Sort by group"*/}
-          {/*    >*/}
-          {/*      {groups.map((group, index) => (*/}
-          {/*        <MenuItem key={index} value={group.value}>{group.name}</MenuItem>*/}
-          {/*      ))}*/}
-          {/*    </Select>*/}
-          {/*  </FormControl>*/}
-          {/*</Grid>*/}
           <Grid item xs={12}>
             <FormGroup>
               <FormControlLabel
-                name={filters.withDescription}
+                name={TODO_WITH_DESCRIPTION_FILTER}
                 label="With description"
                 control={<Checkbox />}
-                checked={searchParams.get(filters.withDescription) === 'checked'}
+                checked={searchParams.get(TODO_WITH_DESCRIPTION_FILTER) === 'checked'}
                 onChange={handleCheckbox}
               />
               <FormControlLabel
                 label="Important"
-                name={filters.isImportant}
+                name={TODO_IS_IMPORTANT_FILTER}
                 control={<Checkbox />}
                 onChange={handleCheckbox}
-                checked={searchParams.get(filters.isImportant) === 'checked'}
+                checked={searchParams.get(TODO_IS_IMPORTANT_FILTER) === 'checked'}
               />
             </FormGroup>
           </Grid>
