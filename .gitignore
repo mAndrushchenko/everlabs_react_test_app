@@ -23,3 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+.idea/react_test_task.iml
