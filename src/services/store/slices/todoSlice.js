@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { loadFromLocalStorage } from "../../../utils"
 
 export const todoSlice = createSlice({
   name: "todoSlice",
-  initialState: [],
+  initialState: loadFromLocalStorage({ key: 'todos', initialValue: [] }),
   reducers: {
     addTodo: (state, { payload }) => {
       state.push(payload)
     },
-
-    setTodos: (state, { payload }) => payload,
 
     removeTodo: (state, { payload }) => {
       return state.filter((todo) => todo.id !== payload.id)
@@ -19,15 +18,21 @@ export const todoSlice = createSlice({
     },
 
     toggleTodo: (state, { payload }) => {
-      let toggledTodo = null
       state.forEach((todo) => {
         if (todo.id === payload.id) {
           todo.isCompleted = !todo.isCompleted
-          toggledTodo = todo.isCompleted || toggledTodo
         }
       })
-      // Move completed todo to the end of the list
-      // toggledTodo && state.push(state.splice(state.indexOf(toggledTodo), 1)[0])
+
+      state.sort((a, b) => (a.isCompleted === b.isCompleted) ? 0 : a.isCompleted ? -1 : 1)
+    },
+
+    toggleStar: (state, { payload }) => {
+      state.forEach((todo) => {
+        if (todo.id === payload.id) {
+          todo.isImportant = !todo.isImportant
+        }
+      })
     },
 
     toggleAllTodos: (state) => {
@@ -38,7 +43,8 @@ export const todoSlice = createSlice({
     updateTodoText: (state, { payload }) => {
       state.forEach(todo => {
         if (todo.id === payload.id) {
-          todo.text = payload.text
+          todo.title = payload.title
+          todo.description = payload.description
         }
       })
     }
@@ -47,10 +53,10 @@ export const todoSlice = createSlice({
 
 export const {
   addTodo,
-  setTodos,
   removeTodo,
   removeCompletedTodos,
   toggleTodo,
+  toggleStar,
   toggleAllTodos,
   updateTodoText
 } = todoSlice.actions
