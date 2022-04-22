@@ -2,8 +2,9 @@ import React from "react"
 import { useSelector } from "react-redux"
 import { useParams, Navigate } from "react-router"
 
-import { TodoItem } from "./index"
+import { TodoItem } from "./TodoItem"
 import { getTodos } from "../../services/store/slices/todoSlice"
+
 
 export const TodoWrapper = () => {
   const { todoId } = useParams()
