@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { Box, Container, Typography } from "@mui/material";
 
