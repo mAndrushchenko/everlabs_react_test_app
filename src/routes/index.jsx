@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom"
 
 import { RoutesList } from "./RoutesList"
 
@@ -15,7 +15,7 @@ import { Typography } from "@mui/material"
 
 
 export const AppRoutes = () => (
-  <BrowserRouter>
+  <HashRouter>
     <Header/>
     {/* Multiple sets of routes 2 */}
     <>
@@ -55,5 +55,5 @@ export const AppRoutes = () => (
 
     {/* useRoutes */}
     {/*<RoutesList/>*/}
-  </BrowserRouter>
+  </HashRouter>
 )
