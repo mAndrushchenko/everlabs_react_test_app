@@ -22,5 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-.idea
-.idea/react_test_task.iml
+/.idea/react_test_task.iml
+/.idea/vcs.xml
+/.idea
